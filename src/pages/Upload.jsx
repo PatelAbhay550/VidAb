@@ -3,6 +3,8 @@ import { Link, Navigate } from "react-router-dom";
 import { collection, addDoc } from "firebase/firestore";
 import { storage } from "../config/firebase";
 import { auth, db } from "../config/firebase";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 const Upload = () => {
@@ -83,6 +85,14 @@ const Upload = () => {
 
             // Add the document to the collection
             await addDoc(videosCollectionRef, videoData);
+            toast.success("Video uploaded successfully!", {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+            });
 
             // Reset form fields after successful upload
             setTitle("");

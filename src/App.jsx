@@ -4,10 +4,12 @@ import Home from "./pages/Home";
 import Auth from "./components/Auth";
 import Profile from "./pages/Profile";
 import Upload from "./pages/Upload";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
     <>
+      <ToastContainer />
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
