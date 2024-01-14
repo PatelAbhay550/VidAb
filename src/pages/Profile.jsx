@@ -1,22 +1,55 @@
 import React, { useState, useEffect } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { auth, db } from "../config/firebase";
-import { getDocs, query, where } from "firebase/firestore";
+import {
+  getDocs,
+  query,
+  collection,
+  orderBy,
+  limit,
+  where,
+} from "firebase/firestore";
 import Videos from "../components/Videos";
 import "./Profile.css";
 
 const Profile = () => {
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [userVideos, setUserVideos] = useState([]);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setIsSignedIn(!!user);
       setLoading(false);
+
+      if (user) {
+        // If the user is signed in, fetch their videos
+        fetchUserVideos(user.uid);
+      }
     });
 
     return () => unsubscribe();
   }, []);
+
+  const fetchUserVideos = async (userId) => {
+    try {
+      const q = query(
+        collection(db, "Videos"),
+
+        limit(5),
+        where("uid", "==", userId)
+      );
+
+      const querySnapshot = await getDocs(q);
+      const videosData = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setUserVideos(videosData);
+    } catch (error) {
+      console.error("Error fetching user videos:", error);
+    }
+  };
 
   if (loading) {
     return <p className="loading">Logging in...</p>;
@@ -34,7 +67,19 @@ const Profile = () => {
             />
             <div className="profile-details">
               <h2>{auth.currentUser.email}</h2>
-              <Videos />
+              {userVideos.length > 0 ? (
+                <>
+                  <h3>Your Videos:</h3>
+                  <Videos videos={userVideos} />
+                </>
+              ) : (
+                <>
+                  <p>You haven't uploaded any videos yet.</p>
+                  <Link to="/upload">
+                    <button className="action-button">Upload Video</button>
+                  </Link>
+                </>
+              )}
               <Link to="/">
                 <button className="action-button">Home</button>
               </Link>
