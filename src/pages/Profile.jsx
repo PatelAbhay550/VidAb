@@ -8,8 +8,11 @@ import {
   orderBy,
   limit,
   where,
+  deleteDoc,
+  doc,
 } from "firebase/firestore";
 import Videos from "../components/Videos";
+import { FaTrash } from "react-icons/fa"; // Import the delete icon from react-icons library
 import "./Profile.css";
 
 const Profile = () => {
@@ -50,6 +53,26 @@ const Profile = () => {
       console.error("Error fetching user videos:", error);
     }
   };
+  function renderDeleteButton(video) {
+    return (
+      <button onClick={() => handleDelete(video.id)} className="delete-button">
+        <FaTrash />
+      </button>
+    );
+  }
+  const handleDelete = async (videoId) => {
+    try {
+      // Delete the video from the database
+      await deleteDoc(doc(db, "Videos", videoId));
+
+      // Remove the deleted video from the state
+      setUserVideos((prevVideos) =>
+        prevVideos.filter((video) => video.id !== videoId)
+      );
+    } catch (error) {
+      console.error("Error deleting video:", error);
+    }
+  };
 
   if (loading) {
     return <p className="loading">Logging in...</p>;
@@ -71,7 +94,10 @@ const Profile = () => {
               {userVideos.length > 0 ? (
                 <>
                   <h3>Your Videos:</h3>
-                  <Videos videos={userVideos} />
+                  <Videos
+                    videos={userVideos}
+                    renderDeleteButton={renderDeleteButton}
+                  />
                 </>
               ) : (
                 <>
