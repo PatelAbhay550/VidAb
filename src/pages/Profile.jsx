@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { Link, Navigate } from "react-router-dom";
-import { auth } from "../config/firebase";
+import { auth, db } from "../config/firebase";
+import { getDocs, query, where } from "firebase/firestore";
+import Videos from "../components/Videos";
 import "./Profile.css";
 
 const Profile = () => {
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [loading, setLoading] = useState(true);
-  const userprf =
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/1200px-User_icon_2.svg.png";
+
   useEffect(() => {
-    // Check if the user is already signed in
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setIsSignedIn(!!user);
       setLoading(false);
     });
 
-    // Cleanup the subscription when the component unmounts
     return () => unsubscribe();
   }, []);
 
@@ -28,9 +27,14 @@ const Profile = () => {
       <div className="mainp">
         <div className="container">
           <div className="profile-card">
-            <img className="profile-image" src={userprf} alt="Profile" />
+            <img
+              className="profile-image"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/1200px-User_icon_2.svg.png"
+              alt="Profile"
+            />
             <div className="profile-details">
               <h2>{auth.currentUser.email}</h2>
+              <Videos />
               <Link to="/">
                 <button className="action-button">Home</button>
               </Link>
@@ -40,7 +44,7 @@ const Profile = () => {
       </div>
     );
   } else {
-    return <>{Navigate("/")}</>;
+    return <Navigate to="/" />;
   }
 };
 
