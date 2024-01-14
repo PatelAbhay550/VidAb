@@ -1,42 +1,8 @@
-# React Video Upload App
+# React + Vite
 
-A simple React application for uploading and viewing videos.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Table of Contents
+Currently, two official plugins are available:
 
-- [Description](#description)
-- [Features](#features)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
-
-## Description
-
-This React Video Upload App allows users to upload videos, view a list of uploaded videos, and watch them. It integrates with Firebase for authentication, Firestore for storing video metadata, and Firebase Storage for storing uploaded videos.
-
-## Features
-
-- User authentication using Firebase Authentication.
-- Video upload with progress tracking.
-- Video details stored in Firestore.
-- Responsive design for various screen sizes.
-- Simple home page to view all uploaded videos.
-
-## Getting Started
-
-### Prerequisites
-
-Make sure you have the following installed:
-
-- Node.js and npm
-- Firebase project with Firestore and Storage configured
-
-### Installation
-
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/your-username/react-video-upload-app.git
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh

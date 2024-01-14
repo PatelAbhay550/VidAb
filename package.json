@@ -13,6 +13,7 @@
     "@ffmpeg/core": "^0.12.6",
     "@ffmpeg/ffmpeg": "^0.12.10",
     "@mantine/dates": "^7.4.1",
+    "date-fns": "^3.2.0",
     "dayjs": "^1.11.10",
     "firebase": "^10.7.1",
     "fluent-ffmpeg": "^2.1.2",

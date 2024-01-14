@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../config/firebase";
 import { getDocs, query, collection, orderBy, limit } from "firebase/firestore";
+import { parse, formatDistanceToNow } from "date-fns";
+
+// Function to calculate the time difference
+const calculateTimeDifference = (dateString, timeString) => {
+  const combinedDateTime = `${dateString} ${timeString}`;
+  const parsedDate = parse(combinedDateTime, "dd/MM/yyyy HH:mm:ss", new Date());
+  return formatDistanceToNow(parsedDate, { addSuffix: true });
+};
 
 const Videos = ({ videos, renderDeleteButton }) => {
   const [vidlist, setVidlist] = useState([]);
@@ -54,7 +62,11 @@ const Videos = ({ videos, renderDeleteButton }) => {
             </div>
             <div className="rightd">
               <h3>{video.title}</h3>
-              <p> Uploaded: {video.timeupload}</p>
+              <p>
+                {" "}
+                Uploaded:{" "}
+                {calculateTimeDifference(video.dateupload, video.timeupload)}
+              </p>
               {renderDeleteButton && renderDeleteButton(video)}
             </div>
           </div>

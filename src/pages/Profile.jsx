@@ -89,7 +89,7 @@ const Profile = () => {
               alt="Profile"
             />
             <div className="profile-details">
-             <h2>{auth.currentUser.displayName}</h2>
+              <h2>{auth.currentUser.displayName}</h2>
 
               {userVideos.length > 0 ? (
                 <>
