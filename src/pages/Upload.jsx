@@ -143,7 +143,7 @@ const Upload = () => {
           </Link>
         </>
       ) : (
-        <p>Please sign in to upload videos.</p>
+        <p>Please sign in to upload videos. {<Navigate to="/" />}</p>
       )}
     </div>
   );
