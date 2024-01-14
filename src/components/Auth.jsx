@@ -4,9 +4,11 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
   onAuthStateChanged,
   signInWithPopup,
   signOut,
+  linkWithCredential,
 } from "firebase/auth";
 import { auth, googleprovider } from "../config/firebase";
 
@@ -42,15 +44,46 @@ const Auth = () => {
     try {
       await createUserWithEmailAndPassword(auth, email, pass);
     } catch (error) {
-      console.error("Error signing in:", error.message);
+      if (error.code === "auth/email-already-in-use") {
+        // User already exists, try signing in instead
+        try {
+          await signInWithEmailAndPassword(auth, email, pass);
+        } catch (signInError) {
+          console.error(
+            "Error signing in with email/password:",
+            signInError.message
+          );
+        }
+      } else {
+        console.error("Error signing in with email/password:", error.message);
+      }
     }
   };
 
   const googlelogin = async () => {
     try {
+      // Attempt to sign in with Google
       await signInWithPopup(auth, googleprovider);
     } catch (error) {
-      console.error("Error signing in:", error.message);
+      if (error.code === "auth/account-exists-with-different-credential") {
+        // User already exists with a different credential, link accounts
+        const credential = error.credential;
+        const email = error.email;
+
+        try {
+          // Retrieve the existing account's credentials and link it with the Google account
+          const existingUser = await signInWithEmailAndPassword(
+            auth,
+            email,
+            "password"
+          );
+          await linkWithCredential(existingUser, credential);
+        } catch (linkError) {
+          console.error("Error linking accounts:", linkError.message);
+        }
+      } else {
+        console.error("Error signing in with Google:", error.message);
+      }
     }
   };
 
