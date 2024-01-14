@@ -35,9 +35,9 @@ const Profile = () => {
     try {
       const q = query(
         collection(db, "Videos"),
-
-        limit(5),
-        where("uid", "==", userId)
+        where("uid", "==", userId),
+        orderBy("timeupload", "desc"),
+        limit(5)
       );
 
       const querySnapshot = await getDocs(q);
@@ -67,6 +67,7 @@ const Profile = () => {
             />
             <div className="profile-details">
               <h2>{auth.currentUser.email}</h2>
+
               {userVideos.length > 0 ? (
                 <>
                   <h3>Your Videos:</h3>
