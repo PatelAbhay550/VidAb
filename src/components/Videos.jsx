@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { db } from "../config/firebase";
 import { getDocs, query, collection, orderBy, limit } from "firebase/firestore";
 import { parse, formatDistanceToNow } from "date-fns";
+import { FaComments } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 // Function to calculate the time difference
 const calculateTimeDifference = (dateString, timeString) => {
@@ -61,12 +63,20 @@ const Videos = ({ videos, renderDeleteButton }) => {
               <p>{video.username}</p>
             </div>
             <div className="rightd">
-              <h3>{video.title}</h3>
+              <h3>
+                {video.title}{" "}
+                <div className="comment">
+                  <Link to={`/comment/${video.id}`}>
+                    <FaComments />
+                  </Link>
+                </div>
+              </h3>
               <p>
                 {" "}
                 Uploaded:{" "}
                 {calculateTimeDifference(video.dateupload, video.timeupload)}
               </p>
+
               {renderDeleteButton && renderDeleteButton(video)}
             </div>
           </div>

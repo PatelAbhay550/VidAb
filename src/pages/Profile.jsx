@@ -84,10 +84,13 @@ const Profile = () => {
         <div className="container">
           <div className="profile-card">
             <img
-  className="profile-image"
-  src={auth?.currentUser?.photoURL || "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/1200px-User_icon_2.svg.png"}
-  alt="Profile"
-/>
+              className="profile-image"
+              src={
+                auth?.currentUser?.photoURL ||
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/1200px-User_icon_2.svg.png"
+              }
+              alt="Profile"
+            />
 
             <div className="profile-details">
               <h2>{auth.currentUser.displayName}</h2>
