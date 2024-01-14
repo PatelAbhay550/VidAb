@@ -58,7 +58,7 @@ const Videos = () => {
     <div className="containerv">
       {vidlist.map((video) => (
         <div className="video-card" key={video.id}>
-          <video className="video" src={video.vidurl} controls controlsList="nodownload"></video>
+          <video className="video" src={video.vidurl} controls></video>
           <div className="video-details">
             <div className="leftd">
               <img src={video.userimg} alt={video.title} />
