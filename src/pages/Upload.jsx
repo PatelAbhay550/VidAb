@@ -16,7 +16,7 @@ const Upload = () => {
   const [percent, setPercent] = useState(0);
   const currDate = new Date().toLocaleDateString();
   const currTime = new Date().toLocaleTimeString();
-  console.log(auth.currentUser.displayName);
+
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);

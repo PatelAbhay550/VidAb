@@ -7,9 +7,29 @@ import { Link } from "react-router-dom";
 
 // Function to calculate the time difference
 const calculateTimeDifference = (dateString, timeString) => {
-  const combinedDateTime = `${dateString} ${timeString}`;
-  const parsedDate = parse(combinedDateTime, "dd/MM/yyyy HH:mm:ss", new Date());
-  return formatDistanceToNow(parsedDate, { addSuffix: true });
+  try {
+    if (!dateString || !timeString) {
+      throw new Error("Invalid date or time");
+    }
+
+    const combinedDateTime = `${dateString} ${timeString}`;
+
+    // Modify the parsing format based on your actual data format
+    const parsedDate = parse(
+      combinedDateTime,
+      "MM/dd/yyyy hh:mm:ss a",
+      new Date()
+    );
+
+    if (isNaN(parsedDate.getTime())) {
+      throw new Error("Invalid parsed date");
+    }
+
+    return formatDistanceToNow(parsedDate, { addSuffix: true });
+  } catch (error) {
+    console.error("Error calculating time difference:", error);
+    return "Some time Ago";
+  }
 };
 
 const Videos = ({ videos, renderDeleteButton }) => {
