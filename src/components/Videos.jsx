@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { db } from "../config/firebase";
 import { getDocs, query, collection, orderBy, limit } from "firebase/firestore";
 
-const Videos = ({ videos }) => {
+const Videos = ({ videos, renderDeleteButton }) => {
   const [vidlist, setVidlist] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -55,6 +55,7 @@ const Videos = ({ videos }) => {
             <div className="rightd">
               <h3>{video.title}</h3>
               <p> Uploaded: {video.timeupload}</p>
+              {renderDeleteButton && renderDeleteButton(video)}
             </div>
           </div>
         </div>
