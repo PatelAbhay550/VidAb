@@ -7,6 +7,9 @@
   font-weight: bold;
   animation: pop 1.5s infinite;
 }
+body {
+  background: #c4c4c4;
+}
 @keyframes pop {
   0% {
     opacity: 1;
@@ -32,7 +35,8 @@
 
 .containerv {
   max-width: 1200px;
-  margin: 20px auto;
+  margin-top: 70px;
+  /* margin: 20px auto; */
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
@@ -41,16 +45,19 @@
 .video-card {
   background-color: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+  border-radius: 15px;
   overflow: hidden;
+  margin: 0 auto;
+
   position: relative;
   transition: transform 0.2s ease-in-out;
 }
 
 .video {
   width: 100%;
-  height: auto;
+  height: 190px;
   object-fit: contain;
+
   aspect-ratio: 16/9;
   display: block;
   border-bottom: 1px solid #ddd;
@@ -60,14 +67,34 @@
   display: flex;
   padding: 0px 15px;
 }
+@media (max-width: 420px) {
+  .video-card {
+    width: 330px;
+  }
+  .comment {
+    margin-right: 15px;
+  }
+  .video-details {
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+  .rightd h3 {
+    line-height: 1;
+    margin-bottom: 0;
+  }
+  .rightd {
+    margin-top: -25px;
+  }
+}
 .leftd {
-  width: 15%;
+  width: 20%;
   padding: 0;
   overflow: hidden;
 }
 .rightd {
   white-space: nowrap;
-  width: 85%;
+  width: 70%;
   padding-left: 15px;
   overflow: hidden;
 }
@@ -81,6 +108,8 @@
 .video-details h3 {
   margin: 10px 0 5px;
   color: #333;
+  width: 80%;
+
   display: flex;
   align-items: center;
   gap: 10px;
@@ -89,10 +118,13 @@
 }
 .comment {
   font-size: 1.86rem;
+  width: 10%;
+  overflow: hidden;
 }
 
 .video-details p {
-  margin: 5px 0;
+  /* margin: 5px 0; */
+  margin-top: -10px;
   color: #666;
   font-size: 14px;
 }
@@ -125,14 +157,17 @@
 
 .input-field {
   margin-bottom: 10px;
-  width: 100%;
+
+  height: 50px;
+  border-radius: 10px;
+  border: none;
   padding: 8px;
   box-sizing: border-box;
 }
 
 .button {
-  background-color: #4caf50;
-  color: white;
+  background-color: #6c95ff;
+  color: #ffaf6c;
   border: none;
   padding: 10px 15px;
   text-align: center;
@@ -149,7 +184,31 @@
 }
 
 .link-button {
-  background-color: #2196f3;
+  height: 65px;
+  border-radius: 15px;
+  background-color: #fff;
+
+  color: #000;
+  display: flex;
+  align-items: center;
+  box-shadow: -22px 22px 44px #bebebe, 22px -22px 44px #ffffff;
+  margin-top: 25px;
+  gap: 10px;
+}
+.link-button img {
+  width: 32px;
+}
+@media (max-width: 425px) {
+  .link-button {
+    width: 330px;
+    height: 65px;
+    border-radius: 15px;
+    background-color: #fff;
+    color: #000;
+  }
+  .input-field {
+    width: 330px;
+  }
 }
 
 .link-button:hover {

@@ -55,7 +55,7 @@ const Navbar = () => {
         </div>
         <div className="right">
           <Link to="/login">
-            <button>Log in</button>
+            <button className="button">Log in</button>
           </Link>
         </div>
       </div>

@@ -83,14 +83,7 @@ const Videos = ({ videos, renderDeleteButton }) => {
               <p>{video.username}</p>
             </div>
             <div className="rightd">
-              <h3>
-                {video.title}{" "}
-                <div className="comment">
-                  <Link to={`/comment/${video.id}`}>
-                    <FaComments />
-                  </Link>
-                </div>
-              </h3>
+              <h3>{video.title} </h3>
               <p>
                 {" "}
                 Uploaded:{" "}
@@ -98,6 +91,11 @@ const Videos = ({ videos, renderDeleteButton }) => {
               </p>
 
               {renderDeleteButton && renderDeleteButton(video)}
+            </div>
+            <div className="comment">
+              <Link to={`/comment/${video.id}`}>
+                <FaComments />
+              </Link>
             </div>
           </div>
         </div>

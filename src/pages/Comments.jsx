@@ -81,7 +81,7 @@ const Comments = () => {
   };
 
   return (
-    <div className="comments-container">
+    <div className="container">
       {isLoading ? (
         <p>Loading comments...</p>
       ) : (
@@ -115,9 +115,22 @@ const Comments = () => {
 
           {/* Display comments */}
           {comments.map((comment) => (
-            <div key={comment.id} className="comment">
-              <p>{comment.text}</p>
-              <p className="comment-details">
+            <div
+              key={comment.id}
+              className="comments-container"
+              style={{ marginBottom: "-40px", overflow: "hidden" }}
+            >
+              <p
+                className="link-button"
+                style={{
+                  marginBottom: "10px",
+                  padding: "0px 15px",
+                  width: "250px",
+                }}
+              >
+                {comment.text}
+              </p>
+              <p className="comment-details ">
                 <img
                   className="imgcom"
                   src={
