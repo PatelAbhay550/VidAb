@@ -1,33 +1,39 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useQuery, QueryClientProvider } from "react-query";
 import { db } from "../config/firebase";
-import { getDocs, collection } from "firebase/firestore";
+import { getDocs, query, collection, orderBy, limit } from "firebase/firestore";
 
 const Videos = () => {
-  const [vidlist, setVidlist] = useState([]);
-  const vidref = collection(db, "Videos");
+  const getVids = async () => {
+    try {
+      const q = query(
+        collection(db, "Videos"),
+        orderBy("timeupload", "desc"),
+        limit(5)
+      );
+      const querySnapshot = await getDocs(q);
+      const videosData = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      return videosData;
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
+  };
 
-  useEffect(() => {
-    const getVids = async () => {
-      try {
-        const querySnapshot = await getDocs(vidref);
-        const videosData = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setVidlist(videosData);
-      } catch (err) {
-        console.error(err);
-      }
-    };
+  const { data: vidlist, isLoading } = useQuery("videos", getVids);
 
-    getVids();
-  }, [vidref]);
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <div className="containerv">
       {vidlist.map((video) => (
         <div className="video-card" key={video.id}>
-          <video className="video" src={video.vidurl} controls controlsList="nodownload"></video>
+          <video className="video" src={video.vidurl} controls></video>
           <div className="video-details">
             <div className="leftd">
               <img src={video.userimg} alt={video.title} />
@@ -35,7 +41,7 @@ const Videos = () => {
             </div>
             <div className="rightd">
               <h3>{video.title}</h3>
-              <p> Uploaded : {video.timeupload}</p>
+              <p> Uploaded: {video.timeupload}</p>
             </div>
           </div>
         </div>

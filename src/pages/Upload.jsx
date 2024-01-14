@@ -128,9 +128,23 @@ const Upload = () => {
             />
           </label>
           <br />
-          <label>
+          <label
+            style={{ display: "flex", alignItems: "center" }}
+            htmlFor="uploadvid"
+          >
+            <img
+              style={{ width: "32px" }}
+              src="https://cdn.pixabay.com/photo/2016/01/03/00/43/upload-1118929_640.png"
+              alt="upload"
+            />
             Select Video:
-            <input type="file" accept="video/*" onChange={handleFileChange} />
+            <input
+              style={{ display: "none" }}
+              type="file"
+              accept="video/*"
+              id="uploadvid"
+              onChange={handleFileChange}
+            />
           </label>
           <br />
           <button className="uploadbtn" onClick={handleUpload}>
