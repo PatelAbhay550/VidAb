@@ -8,9 +8,12 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 const Upload = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [uid, setUid] = useState("");
   const [file, setFile] = useState("");
   const [redirectToHome, setRedirectToHome] = useState(false);
   const [percent, setPercent] = useState(0);
+  const currDate = new Date().toLocaleDateString();
+  const currTime = new Date().toLocaleTimeString();
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -28,7 +31,10 @@ const Upload = () => {
       if (auth.currentUser) {
         // If there is a current user, proceed with the upload
         // Upload file to Firebase Storage
-        const storageRef = ref(storage, `/files/${file.name}`);
+        // Assuming userId is obtained from the authenticated user
+        const userId = auth.currentUser.uid;
+        const storageRef = ref(storage, `/files/${userId}/${file.name}`);
+
         const uploadTask = uploadBytesResumable(storageRef, file);
 
         uploadTask.on(
@@ -53,6 +59,9 @@ const Upload = () => {
             const videoData = {
               title,
               vidurl: downloadURL,
+              uid: userId,
+              dateupload: currDate,
+              timeupload: currTime,
             };
 
             // Check if the user logged in via Google
@@ -79,6 +88,7 @@ const Upload = () => {
             setTitle("");
             setDescription("");
             setFile("");
+            setUid("");
             setPercent(0);
           }
         );

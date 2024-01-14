@@ -65,6 +65,7 @@
 }
 .rightd {
   width: 85%;
+  padding-left: 15px;
   overflow: hidden;
 }
 .video-details img {

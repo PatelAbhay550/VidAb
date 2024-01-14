@@ -35,6 +35,7 @@ const Videos = () => {
             </div>
             <div className="rightd">
               <h3>{video.title}</h3>
+              <p> Uploaded : {video.timeupload}</p>
             </div>
           </div>
         </div>

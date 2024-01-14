@@ -44,6 +44,7 @@
 .upload {
   font-size: 1.84rem;
   border: 1px solid #fff;
+  color: #fff;
   border-radius: 50%;
   padding: 5px;
   cursor: pointer;
