@@ -8,8 +8,10 @@ import {
   where,
   orderBy,
   addDoc,
+  deleteDoc,
+  doc,
 } from "firebase/firestore";
-// Import your CSS file
+import { FaTrash } from "react-icons/fa";
 
 const Comments = () => {
   const location = useLocation();
@@ -18,6 +20,11 @@ const Comments = () => {
   const [newComment, setNewComment] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState(null);
+  const [keyForRerender, setKeyForRerender] = useState(0);
+
+  const triggerRerender = () => {
+    setKeyForRerender((prevKey) => prevKey + 1);
+  };
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -40,27 +47,22 @@ const Comments = () => {
       }
     };
 
-    // Fetch comments when the component mounts or when the vidurl changes
     fetchComments();
 
-    // Set up an authentication state observer
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
     });
 
-    // Clean up the observer to avoid memory leaks
     return () => unsubscribe();
-  }, [vidurl]);
+  }, [vidurl, keyForRerender]);
 
   const handleAddComment = async () => {
     if (!currentUser) {
-      // If user is not signed in, you can redirect them to the sign-in page or show a message
       alert("Please sign in to add comments!");
       return;
     }
 
     try {
-      // Create a new comment object with necessary information
       const newCommentData = {
         userEmail: currentUser.email,
         userName: currentUser.displayName || "Anonymous",
@@ -68,27 +70,35 @@ const Comments = () => {
         text: newComment,
         timestamp: new Date(),
         vidurl: vidurl,
+        userUid: currentUser.uid,
       };
 
-      // Add the new comment to the "Comments" collection in Firestore
       await addDoc(collection(db, "Comments"), newCommentData);
 
-      // Clear the comment input after adding a comment
       setNewComment("");
+      triggerRerender();
     } catch (error) {
       console.error("Error adding comment:", error);
     }
   };
 
+  const handleDeleteComment = async (commentId) => {
+    try {
+      await deleteDoc(doc(db, "Comments", commentId));
+      triggerRerender();
+    } catch (error) {
+      console.error("Error deleting comment:", error);
+    }
+  };
+
   return (
-    <div className="container">
+    <div key={keyForRerender} className="container">
       {isLoading ? (
         <p>Loading comments...</p>
       ) : (
         <div>
           {currentUser && (
             <div>
-              {/* Comment input for signed-in users */}
               <textarea
                 value={newComment}
                 onChange={(e) => setNewComment(e.target.value)}
@@ -98,10 +108,7 @@ const Comments = () => {
               <button onClick={handleAddComment} className="action-button">
                 Add Comment
               </button>
-              <button
-                className="action-button hm"
-                style={{ padding: "5px 10px", marginLeft: "20px" }}
-              >
+              <button className="action-button hm">
                 <Link to="/">Home</Link>
               </button>
             </div>
@@ -113,7 +120,6 @@ const Comments = () => {
             </p>
           )}
 
-          {/* Display comments */}
           {comments.map((comment) => (
             <div
               key={comment.id}
@@ -142,8 +148,13 @@ const Comments = () => {
                 Comment by: {comment.userName}
                 <br />
                 {comment.timestamp.toDate().toLocaleString()}
+                {currentUser?.uid === comment.userUid && (
+                  <FaTrash
+                    className="delete-icon"
+                    onClick={() => handleDeleteComment(comment.id)}
+                  />
+                )}
               </p>
-              {/* Add more details as needed */}
             </div>
           ))}
         </div>
