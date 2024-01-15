@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { db } from "../config/firebase";
 import {
   getDocs,
@@ -11,11 +12,9 @@ import {
 } from "firebase/firestore";
 import { parse, formatDistanceToNow } from "date-fns";
 import { FaComments } from "react-icons/fa6";
-import { Link } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 
-// Function to calculate the time difference
 const calculateTimeDifference = (dateString, timeString) => {
   try {
     if (!dateString || !timeString) {
@@ -23,8 +22,6 @@ const calculateTimeDifference = (dateString, timeString) => {
     }
 
     const combinedDateTime = `${dateString} ${timeString}`;
-
-    // Modify the parsing format based on your actual data format
     const parsedDate = parse(
       combinedDateTime,
       "MM/dd/yyyy hh:mm:ss a",
@@ -68,7 +65,6 @@ const Videos = ({ videos, renderDeleteButton, onDelete }) => {
 
   const handleVideoClick = (video) => {
     setSelectedVideo(video);
-    
   };
 
   const handleDeleteConfirmation = (video) => {
@@ -90,7 +86,6 @@ const Videos = ({ videos, renderDeleteButton, onDelete }) => {
 
   const handleDelete = async (videoId) => {
     try {
-      // Delete the video from the database
       await deleteDoc(doc(db, "Videos", videoId));
 
       // Remove the deleted video from the state
@@ -100,6 +95,10 @@ const Videos = ({ videos, renderDeleteButton, onDelete }) => {
 
       // Propagate the delete action to the parent component
       onDelete && onDelete(videoId);
+
+      if (selectedVideo && selectedVideo.id === videoId) {
+        setSelectedVideo(null);
+      }
     } catch (error) {
       console.error("Error deleting video:", error);
     }
@@ -126,12 +125,14 @@ const Videos = ({ videos, renderDeleteButton, onDelete }) => {
     <div className="containerv">
       {videos.map((video) => (
         <div className="video-card" key={video.id}>
-          <video
-            className="video"
-            src={video.vidurl}
-            controls={selectedVideo === video}
-            onClick={() => handleVideoClick(video)}
-          ></video>
+          <Link to={`/playarea/${video.id}`}>
+            <video
+              className="video"
+              src={video.vidurl}
+              controls={selectedVideo === video}
+              onClick={() => handleVideoClick(video)}
+            ></video>
+          </Link>
           <div className="video-details">
             <div className="leftd">
               <img src={video.userimg} alt={video.title} />
@@ -140,11 +141,9 @@ const Videos = ({ videos, renderDeleteButton, onDelete }) => {
             <div className="rightd">
               <h3>{video.title} </h3>
               <p>
-                {" "}
                 Uploaded:{" "}
                 {calculateTimeDifference(video.dateupload, video.timeupload)}
               </p>
-
               {renderDeleteButton && renderDeleteButton(video)}
             </div>
             <div className="comment">
@@ -155,6 +154,15 @@ const Videos = ({ videos, renderDeleteButton, onDelete }) => {
           </div>
         </div>
       ))}
+      {selectedVideo === null && <p></p>}
+      {selectedVideo && (
+        <div>
+          <h2>Selected Video Details</h2>
+          <p>ID: {selectedVideo.id}</p>
+          <p>Title: {selectedVideo.title}</p>
+          {/* Add more details as needed */}
+        </div>
+      )}
     </div>
   );
 };
