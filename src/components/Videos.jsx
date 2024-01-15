@@ -41,7 +41,7 @@ const Videos = ({ videos, renderDeleteButton }) => {
   const [vidlist, setVidlist] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedVideo, setSelectedVideo] = useState(null);
-  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [isDeleteConfirmed, setIsDeleteConfirmed] = useState(false);
 
   const getVids = async () => {
     try {
@@ -64,23 +64,26 @@ const Videos = ({ videos, renderDeleteButton }) => {
 
   const handleVideoClick = (video) => {
     setSelectedVideo(video);
-    setShowDeleteConfirmation(true);
+    setIsDeleteConfirmed(false); // Reset confirmation state
   };
 
   const handleDelete = async () => {
-    try {
-      // Delete the video from the database
-      await deleteDoc(doc(db, "Videos", selectedVideo.id));
+    if (isDeleteConfirmed) {
+      try {
+        // Delete the video from the database
+        await deleteDoc(doc(db, "Videos", selectedVideo.id));
 
-      // Remove the deleted video from the state
-      setVidlist((prevVideos) =>
-        prevVideos.filter((video) => video.id !== selectedVideo.id)
-      );
-
-      // Close the delete confirmation popup
-      setShowDeleteConfirmation(false);
-    } catch (error) {
-      console.error("Error deleting video:", error);
+        // Remove the deleted video from the state
+        setVidlist((prevVideos) =>
+          prevVideos.filter((video) => video.id !== selectedVideo.id)
+        );
+      } catch (error) {
+        console.error("Error deleting video:", error);
+      } finally {
+        // Close the delete confirmation popup
+        setSelectedVideo(null);
+        setIsDeleteConfirmed(false);
+      }
     }
   };
 
@@ -133,11 +136,11 @@ const Videos = ({ videos, renderDeleteButton }) => {
           </div>
         </div>
       ))}
-      {showDeleteConfirmation && (
+      {selectedVideo && (
         <div className="delete-confirmation">
           <p>Are you sure you want to delete this video?</p>
-          <button onClick={handleDelete}>Yes</button>
-          <button onClick={() => setShowDeleteConfirmation(false)}>No</button>
+          <button onClick={() => setIsDeleteConfirmed(true)}>Yes</button>
+          <button onClick={() => setSelectedVideo(null)}>No</button>
         </div>
       )}
     </div>
