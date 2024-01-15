@@ -58,8 +58,11 @@ const Playarea = () => {
           </div>
 
           <div className="comment">
-            <Link to={`/comment/${videoId}`}>
-              <FaComments />
+            <Link
+              style={{ color: "inherit", textDecoration: "none" }}
+              to={`/comment/${videoId}`}
+            >
+              <div className="comop"> Comments:</div>
             </Link>
           </div>
           <Link to="/" className="action-button">
