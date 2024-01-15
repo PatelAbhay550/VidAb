@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { db } from "../config/firebase";
 import { Link } from "react-router-dom";
-import { FaComments } from "react-icons/fa6";
+import { CiShare2 } from "react-icons/ci";
 import { doc, getDoc } from "firebase/firestore";
 import styles from "./Playarea.module.css";
 
@@ -31,6 +31,21 @@ const Playarea = () => {
 
     fetchVideoDetails();
   }, [videoId]);
+
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator
+        .share({
+          title: video.title,
+          text: video.description || "No description",
+          url: window.location.href,
+        })
+        .then(() => console.log("Share successful"))
+        .catch((error) => console.error("Error sharing:", error));
+    } else {
+      alert("Web Share API not supported in your browser.");
+    }
+  };
 
   return (
     <div className={styles.playarecontainer}>
@@ -65,6 +80,12 @@ const Playarea = () => {
               <div className="comop"> Comments:</div>
             </Link>
           </div>
+
+          <button className="action-button" onClick={handleShare}>
+            <CiShare2 />
+            Share
+          </button>
+
           <Link to="/" className="action-button">
             {" "}
             Home
