@@ -10,6 +10,9 @@
 body {
   background: #c4c4c4;
 }
+.video-thumbnail{
+  height:200px;
+}
 @keyframes pop {
   0% {
     opacity: 1;
