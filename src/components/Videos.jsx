@@ -146,11 +146,6 @@ const Videos = ({ videos, renderDeleteButton, onDelete }) => {
               </p>
               {renderDeleteButton && renderDeleteButton(video)}
             </div>
-            <div className="comment">
-              <Link to={`/comment/${video.id}`}>
-                <FaComments />
-              </Link>
-            </div>
           </div>
         </div>
       ))}
