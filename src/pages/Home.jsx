@@ -104,7 +104,7 @@ const PrivacyPopup = ({ onClose }) => {
           Privacy Policy.
         </p>
 
-        <button onClick={onClose}>I Agree</button>
+        <button className="action-button" onClick={onClose}>I Agree</button>
       </div>
     </div>
   );
