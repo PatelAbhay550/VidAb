@@ -12,7 +12,10 @@ import {
 import { parse, formatDistanceToNow } from "date-fns";
 import { FaComments } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
 
+// Function to calculate the time difference
 const calculateTimeDifference = (dateString, timeString) => {
   try {
     if (!dateString || !timeString) {
@@ -20,6 +23,8 @@ const calculateTimeDifference = (dateString, timeString) => {
     }
 
     const combinedDateTime = `${dateString} ${timeString}`;
+
+    // Modify the parsing format based on your actual data format
     const parsedDate = parse(
       combinedDateTime,
       "MM/dd/yyyy hh:mm:ss a",
@@ -37,11 +42,10 @@ const calculateTimeDifference = (dateString, timeString) => {
   }
 };
 
-const Videos = ({ videos, renderDeleteButton }) => {
+const Videos = ({ videos, renderDeleteButton, onDelete }) => {
   const [vidlist, setVidlist] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedVideo, setSelectedVideo] = useState(null);
-  const [isDeleteConfirmed, setIsDeleteConfirmed] = useState(false);
 
   const getVids = async () => {
     try {
@@ -64,26 +68,40 @@ const Videos = ({ videos, renderDeleteButton }) => {
 
   const handleVideoClick = (video) => {
     setSelectedVideo(video);
-    setIsDeleteConfirmed(false); // Reset confirmation state
+    handleDeleteConfirmation(video);
   };
 
-  const handleDelete = async () => {
-    if (isDeleteConfirmed) {
-      try {
-        // Delete the video from the database
-        await deleteDoc(doc(db, "Videos", selectedVideo.id));
+  const handleDeleteConfirmation = (video) => {
+    confirmAlert({
+      title: "Confirm Deletion",
+      message: "Are you sure you want to delete this video?",
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () => handleDelete(video.id),
+        },
+        {
+          label: "No",
+          onClick: () => {},
+        },
+      ],
+    });
+  };
 
-        // Remove the deleted video from the state
-        setVidlist((prevVideos) =>
-          prevVideos.filter((video) => video.id !== selectedVideo.id)
-        );
-      } catch (error) {
-        console.error("Error deleting video:", error);
-      } finally {
-        // Close the delete confirmation popup
-        setSelectedVideo(null);
-        setIsDeleteConfirmed(false);
-      }
+  const handleDelete = async (videoId) => {
+    try {
+      // Delete the video from the database
+      await deleteDoc(doc(db, "Videos", videoId));
+
+      // Remove the deleted video from the state
+      setVidlist((prevVideos) =>
+        prevVideos.filter((video) => video.id !== videoId)
+      );
+
+      // Propagate the delete action to the parent component
+      onDelete && onDelete(videoId);
+    } catch (error) {
+      console.error("Error deleting video:", error);
     }
   };
 
@@ -126,6 +144,7 @@ const Videos = ({ videos, renderDeleteButton }) => {
                 Uploaded:{" "}
                 {calculateTimeDifference(video.dateupload, video.timeupload)}
               </p>
+
               {renderDeleteButton && renderDeleteButton(video)}
             </div>
             <div className="comment">
@@ -136,13 +155,6 @@ const Videos = ({ videos, renderDeleteButton }) => {
           </div>
         </div>
       ))}
-      {selectedVideo && (
-        <div className="delete-confirmation">
-          <p>Are you sure you want to delete this video?</p>
-          <button onClick={() => setIsDeleteConfirmed(true)}>Yes</button>
-          <button onClick={() => setSelectedVideo(null)}>No</button>
-        </div>
-      )}
     </div>
   );
 };

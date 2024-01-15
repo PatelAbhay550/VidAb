@@ -8,12 +8,14 @@ import {
   orderBy,
   limit,
   where,
-  deleteDoc,
-  doc,
+  deleteDoc, // Make sure to import deleteDoc
+  doc, // Make sure to import doc
 } from "firebase/firestore";
 import Videos from "../components/Videos";
 import { FaTrash } from "react-icons/fa"; // Import the delete icon from react-icons library
 import "./Profile.css";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
 
 const Profile = () => {
   const [isSignedIn, setIsSignedIn] = useState(false);
@@ -53,16 +55,39 @@ const Profile = () => {
       console.error("Error fetching user videos:", error);
     }
   };
-  function renderDeleteButton(video) {
+
+  const renderDeleteButton = (video) => {
     return (
-      <button onClick={() => handleDelete(video.id)} className="delete-button">
+      <button
+        onClick={() => handleDeleteConfirmation(video)}
+        className="delete-button"
+      >
         <FaTrash />
       </button>
     );
-  }
+  };
+
+  const handleDeleteConfirmation = (video) => {
+    confirmAlert({
+      title: "Confirm Deletion",
+      message: "Are you sure you want to delete this video?",
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () => handleDelete(video.id),
+        },
+        {
+          label: "No",
+          onClick: () => {},
+        },
+      ],
+    });
+  };
+
   const handleDelete = async (videoId) => {
     try {
       // Delete the video from the database
+      // Note: You may want to move this logic to Videos.jsx
       await deleteDoc(doc(db, "Videos", videoId));
 
       // Remove the deleted video from the state
@@ -111,6 +136,7 @@ const Profile = () => {
                       className="fc"
                       videos={userVideos}
                       renderDeleteButton={renderDeleteButton}
+                      onDelete={handleDelete}
                     />
                   </div>
                 </>
