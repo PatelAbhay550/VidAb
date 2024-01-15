@@ -111,6 +111,7 @@ const PrivacyPopup = ({ onClose }) => {
 };
 
 const Home = () => {
+  document.title = "Vidab - Video streaming App";
   const [latestVideos, setLatestVideos] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showPrivacyPopup, setShowPrivacyPopup] = useState(
