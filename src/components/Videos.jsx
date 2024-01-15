@@ -130,7 +130,12 @@ const Videos = ({ videos, renderDeleteButton, onDelete }) => {
               <img
                 className="video-thumbnail"
                 src={video.thumbnail}
-                style={{ width: "100%", objectFit: "contain" }}
+                style={{
+                  width: "100%",
+                  objectFit: "contain",
+                  background: "#6c95ff",
+                  aspectRatio: "16/9",
+                }}
                 alt={video.title}
               />
             ) : (
@@ -138,6 +143,12 @@ const Videos = ({ videos, renderDeleteButton, onDelete }) => {
                 className="video"
                 src={video.vidurl}
                 controls={selectedVideo === video}
+                style={{
+                  width: "100%",
+                  objectFit: "contain",
+                  background: "#6c95ff",
+                  aspectRatio: "16/9",
+                }}
                 onClick={() => handleVideoClick(video)}
               ></video>
             )}
