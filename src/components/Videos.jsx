@@ -126,12 +126,21 @@ const Videos = ({ videos, renderDeleteButton, onDelete }) => {
       {videos.map((video) => (
         <div className="video-card" key={video.id}>
           <Link to={`/playarea/${video.id}`}>
-            <video
-              className="video"
-              src={video.vidurl}
-              controls={selectedVideo === video}
-              onClick={() => handleVideoClick(video)}
-            ></video>
+            {video.thumbnail ? (
+              <img
+                className="video-thumbnail"
+                src={video.thumbnail}
+                style={{ width: "100%", objectFit: "contain" }}
+                alt={video.title}
+              />
+            ) : (
+              <video
+                className="video"
+                src={video.vidurl}
+                controls={selectedVideo === video}
+                onClick={() => handleVideoClick(video)}
+              ></video>
+            )}
           </Link>
           <div className="video-details">
             <div className="leftd">
