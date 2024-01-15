@@ -40,7 +40,7 @@ const Playarea = () => {
           <video className="video" src={video.vidurl} controls></video>
 
           <h2>Title: {video.title}</h2>
-          <p>Desc: {video?.desc || "No description"}</p>
+          <p>Desc: {video?.description || "No description"}</p>
           <div className={styles.user}>
             <img
               src={
