@@ -35,6 +35,7 @@ const calculateTimeDifference = (dateString, timeString) => {
 const Videos = ({ videos, renderDeleteButton }) => {
   const [vidlist, setVidlist] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedVideo, setSelectedVideo] = useState(null);
 
   const getVids = async () => {
     try {
@@ -53,6 +54,10 @@ const Videos = ({ videos, renderDeleteButton }) => {
       console.error(err);
       throw err;
     }
+  };
+  const handleVideoClick = (video) => {
+    // Toggle the selected video
+    setSelectedVideo(selectedVideo === video ? null : video);
   };
 
   useEffect(() => {
@@ -76,7 +81,13 @@ const Videos = ({ videos, renderDeleteButton }) => {
     <div className="containerv">
       {videos.map((video) => (
         <div className="video-card" key={video.id}>
-          <video className="video" src={video.vidurl} controls></video>
+          <video
+            className="video"
+            src={video.vidurl}
+            controls={selectedVideo === video}
+            controlslist="nodownload"
+            onClick={() => handleVideoClick(video)}
+          ></video>
           <div className="video-details">
             <div className="leftd">
               <img src={video.userimg} alt={video.title} />
