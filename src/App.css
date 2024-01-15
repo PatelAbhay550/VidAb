@@ -10,9 +10,6 @@
 body {
   background: #c4c4c4;
 }
-.video-thumbnail{
-  height:200px;
-}
 @keyframes pop {
   0% {
     opacity: 1;
@@ -77,6 +74,7 @@ body {
   }
   .comment {
     margin-right: 15px;
+    width: 100%;
     color: #6c95ff;
     border: none;
   }
@@ -137,7 +135,7 @@ body {
 }
 .comment {
   font-size: 1.86rem;
-  width: 10%;
+  width: 100%;
   overflow: hidden;
 }
 
@@ -258,7 +256,7 @@ body {
 
 .comment {
   margin-bottom: 20px;
-  border: 1px solid #ddd;
+
   padding: 10px;
 }
 
@@ -307,4 +305,16 @@ body {
     margin-bottom: 30px;
     margin-top: -10px;
   }
+}
+.comop {
+  width: 330px;
+  height: 50px;
+  background-color: #bebebe;
+  cursor: pointer;
+  margin-top: 20px;
+  position: relative;
+  padding: 10px 0;
+  font-size: 17px;
+  color: #000;
+  border-radius: 10px;
 }
