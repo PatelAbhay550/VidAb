@@ -93,7 +93,15 @@ const Profile = () => {
             />
 
             <div className="profile-details">
-              <h2>{auth.currentUser.displayName}</h2>
+              <h2>
+                <div>
+                  {auth.currentUser.displayName ? (
+                    <p>Name: {auth.currentUser.displayName}</p>
+                  ) : (
+                    <p>Email: {auth.currentUser.email || "N/A"}</p>
+                  )}
+                </div>
+              </h2>
 
               {userVideos.length > 0 ? (
                 <>
@@ -112,7 +120,7 @@ const Profile = () => {
                 </>
               )}
               <Link to="/">
-                <button className="action-button">Home</button>
+                <button className="action-button hm">Home</button>
               </Link>
             </div>
           </div>

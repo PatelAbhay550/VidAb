@@ -117,33 +117,35 @@ const Upload = () => {
   }
 
   return (
-    <div>
+    <div className="upl">
       <h2>Upload Video</h2>
       {auth.currentUser ? (
         <>
-          <label>
+          <label htmlFor="title">
             Title:
             <input
               type="text"
               value={title}
+              id="title"
               onChange={(e) => setTitle(e.target.value)}
             />
           </label>
           <br />
-          <label>
+          <label htmlFor="desc">
             Description:
             <textarea
               value={description}
+              id="desc"
               onChange={(e) => setDescription(e.target.value)}
             />
           </label>
           <br />
           <label
-            style={{ display: "flex", alignItems: "center" }}
+            style={{ display: "flex", alignItems: "center", gap: "10px" }}
             htmlFor="uploadvid"
           >
             <img
-              style={{ width: "32px" }}
+              style={{ width: "52px" }}
               src="https://cdn.pixabay.com/photo/2016/01/03/00/43/upload-1118929_640.png"
               alt="upload"
             />
@@ -157,14 +159,13 @@ const Upload = () => {
             />
           </label>
           <br />
-          <button className="uploadbtn" onClick={handleUpload}>
+          <button className="action-button upb" onClick={handleUpload}>
             Upload
           </button>
-          <p>{percent} % done</p>
-
-          <Link className="homee" to="/">
+          <Link className="action-button hm go" to="/">
             Home
           </Link>
+          <p>{percent} % done</p>
         </>
       ) : (
         <p>Please sign in to upload videos. {<Navigate to="/" />}</p>
