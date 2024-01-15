@@ -37,7 +37,7 @@ const Playarea = () => {
       navigator
         .share({
           title: video.title,
-          text: video.description || "No description",
+
           url: window.location.href,
         })
         .then(() => console.log("Share successful"))
