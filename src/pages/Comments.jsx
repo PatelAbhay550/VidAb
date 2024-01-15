@@ -61,7 +61,10 @@ const Comments = () => {
       alert("Please sign in to add comments!");
       return;
     }
-
+    if (!newComment.trim()) {
+      alert("Please enter a non-empty comment!");
+      return;
+    }
     try {
       const newCommentData = {
         userEmail: currentUser.email,
