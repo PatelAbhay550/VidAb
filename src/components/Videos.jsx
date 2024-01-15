@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../config/firebase";
-import { getDocs, query, collection, orderBy, limit } from "firebase/firestore";
+import {
+  getDocs,
+  query,
+  collection,
+  orderBy,
+  limit,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
 import { parse, formatDistanceToNow } from "date-fns";
 import { FaComments } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 
-// Function to calculate the time difference
 const calculateTimeDifference = (dateString, timeString) => {
   try {
     if (!dateString || !timeString) {
@@ -13,8 +20,6 @@ const calculateTimeDifference = (dateString, timeString) => {
     }
 
     const combinedDateTime = `${dateString} ${timeString}`;
-
-    // Modify the parsing format based on your actual data format
     const parsedDate = parse(
       combinedDateTime,
       "MM/dd/yyyy hh:mm:ss a",
@@ -36,6 +41,7 @@ const Videos = ({ videos, renderDeleteButton }) => {
   const [vidlist, setVidlist] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedVideo, setSelectedVideo] = useState(null);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 
   const getVids = async () => {
     try {
@@ -55,9 +61,27 @@ const Videos = ({ videos, renderDeleteButton }) => {
       throw err;
     }
   };
+
   const handleVideoClick = (video) => {
-    // Toggle the selected video
-    setSelectedVideo(selectedVideo === video ? null : video);
+    setSelectedVideo(video);
+    setShowDeleteConfirmation(true);
+  };
+
+  const handleDelete = async () => {
+    try {
+      // Delete the video from the database
+      await deleteDoc(doc(db, "Videos", selectedVideo.id));
+
+      // Remove the deleted video from the state
+      setVidlist((prevVideos) =>
+        prevVideos.filter((video) => video.id !== selectedVideo.id)
+      );
+
+      // Close the delete confirmation popup
+      setShowDeleteConfirmation(false);
+    } catch (error) {
+      console.error("Error deleting video:", error);
+    }
   };
 
   useEffect(() => {
@@ -85,7 +109,6 @@ const Videos = ({ videos, renderDeleteButton }) => {
             className="video"
             src={video.vidurl}
             controls={selectedVideo === video}
-            controlslist="nodownload"
             onClick={() => handleVideoClick(video)}
           ></video>
           <div className="video-details">
@@ -100,7 +123,6 @@ const Videos = ({ videos, renderDeleteButton }) => {
                 Uploaded:{" "}
                 {calculateTimeDifference(video.dateupload, video.timeupload)}
               </p>
-
               {renderDeleteButton && renderDeleteButton(video)}
             </div>
             <div className="comment">
@@ -111,6 +133,13 @@ const Videos = ({ videos, renderDeleteButton }) => {
           </div>
         </div>
       ))}
+      {showDeleteConfirmation && (
+        <div className="delete-confirmation">
+          <p>Are you sure you want to delete this video?</p>
+          <button onClick={handleDelete}>Yes</button>
+          <button onClick={() => setShowDeleteConfirmation(false)}>No</button>
+        </div>
+      )}
     </div>
   );
 };
