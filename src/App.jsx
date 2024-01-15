@@ -6,6 +6,7 @@ import Profile from "./pages/Profile";
 import Upload from "./pages/Upload";
 import { ToastContainer } from "react-toastify";
 import Comments from "./pages/Comments";
+import Playarea from "./pages/Playarea";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/upload" element={<Upload />} />
           <Route path="/comment/:videoId" element={<Comments />} />
+          <Route path="/Playarea/:videoId" element={<Playarea />} />
         </Routes>
       </Router>
     </>
