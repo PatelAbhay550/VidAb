@@ -19,6 +19,7 @@ const Playarea = () => {
 
         if (videoDoc.exists()) {
           setVideo(videoDoc.data());
+          document.title = videoDoc.data().title;
         } else {
           console.log("Video not found");
         }
