@@ -106,10 +106,12 @@ const Profile = () => {
               {userVideos.length > 0 ? (
                 <>
                   <h3>Your Videos:</h3>
-                  <Videos
-                    videos={userVideos}
-                    renderDeleteButton={renderDeleteButton}
-                  />
+                  <div className="vidspro">
+                    <Videos
+                      videos={userVideos}
+                      renderDeleteButton={renderDeleteButton}
+                    />
+                  </div>
                 </>
               ) : (
                 <>
