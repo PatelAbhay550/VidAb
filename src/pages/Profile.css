@@ -74,7 +74,9 @@
   align-items: center;
 }
 
+
 .fc {
-  display: flex;
-  flex-direction: column;
+  width: 100%; /* Ensure Videos take the full width of the container */
+  max-width: 800px; /* Adjust based on your design */
+  margin: 0 auto; /* Center the Videos within the container */
 }
