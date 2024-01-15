@@ -95,11 +95,11 @@ const Comments = () => {
                 placeholder="Add a comment..."
                 className="comment-input"
               />
-              <button onClick={handleAddComment} className="comment-button">
+              <button onClick={handleAddComment} className="action-button">
                 Add Comment
               </button>
               <button
-                className="homebtn"
+                className="action-button hm"
                 style={{ padding: "5px 10px", marginLeft: "20px" }}
               >
                 <Link to="/">Home</Link>
