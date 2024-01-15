@@ -14,6 +14,7 @@ import { parse, formatDistanceToNow } from "date-fns";
 import { FaComments } from "react-icons/fa6";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
+import "./Videos.css";
 
 const calculateTimeDifference = (dateString, timeString) => {
   try {
@@ -124,7 +125,7 @@ const Videos = ({ videos, renderDeleteButton, onDelete }) => {
   return (
     <div className="containerv">
       {videos.map((video) => (
-        <div className="video-card" key={video.id}>
+        <div className="video-card card-p" key={video.id}>
           <Link to={`/playarea/${video.id}`}>
             {video.thumbnail ? (
               <img
@@ -143,6 +144,7 @@ const Videos = ({ videos, renderDeleteButton, onDelete }) => {
                 className="video"
                 src={video.vidurl}
                 controls={selectedVideo === video}
+                controlsList="nodownload"
                 style={{
                   width: "100%",
                   objectFit: "contain",

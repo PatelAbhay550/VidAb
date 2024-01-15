@@ -134,6 +134,7 @@ const Comments = () => {
                 style={{
                   marginBottom: "10px",
                   padding: "0px 15px",
+                  color: "#000",
                   width: "250px",
                 }}
               >

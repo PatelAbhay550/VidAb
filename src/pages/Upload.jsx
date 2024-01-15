@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import VideoThumbnail from "react-video-thumbnail";
+import "./Upload.css";
 
 const Upload = () => {
   const [title, setTitle] = useState("");
@@ -189,7 +190,6 @@ const Upload = () => {
               onChange={handleFileChange}
             />
           </label>
-
           <br />
           <label htmlFor="uploadthumb">
             Click to Select Thumbnail:
@@ -217,7 +217,7 @@ const Upload = () => {
           <br />
           <button className="action-button upb" onClick={handleUpload}>
             Upload
-          </button>
+          </button>{" "}
           <Link className="action-button hm go" to="/">
             Home
           </Link>

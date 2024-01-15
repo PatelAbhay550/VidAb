@@ -32,7 +32,7 @@ const Navbar = () => {
     return (
       <div className="main">
         <div className="left">
-          <h1>VidAb</h1>
+          <h2>VidAb</h2>
         </div>
         <div className="right">
           <Link to="/upload">

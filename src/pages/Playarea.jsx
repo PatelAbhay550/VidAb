@@ -55,8 +55,8 @@ const Playarea = () => {
         <div>
           <video className="video" src={video.vidurl} controls></video>
 
-          <h2>Title: {video.title}</h2>
-          <p>Desc: {video?.description || "No description"}</p>
+          <h2>{video.title}</h2>
+          <p>Description: {video?.description || "No description"}</p>
           <div className={styles.user}>
             <img
               src={
@@ -87,7 +87,7 @@ const Playarea = () => {
             Share
           </button>
 
-          <Link to="/" className="action-button">
+          <Link to="/" style={{ marginLeft: "20px" }} className="action-button">
             {" "}
             Home
           </Link>

@@ -1,0 +1,85 @@
+/* Upload.css */
+
+.upl {
+  background-color: #121212;
+  color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.upl h2 {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+input[type="text"],
+textarea,
+input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #303030;
+  color: #fff;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+img {
+  margin-left: 10px;
+  cursor: pointer;
+  max-width: 100%;
+}
+
+.action-button {
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.action-button.hm {
+  background-color: #297fb9ac;
+  margin: 0;
+}
+
+.action-button.upb {
+  background-color: #2980b9;
+}
+
+.action-button:hover {
+  background-color: #2980b9;
+}
+#desc {
+  height: 120px;
+}
+
+p {
+  margin-top: 10px;
+}
+
+progress {
+  width: 100%;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #303030;
+  color: #3498db;
+}
+@media (min-width: 420px) {
+  .hm {
+    margin-bottom: -30px;
+  }
+}

@@ -8,7 +8,8 @@
   animation: pop 1.5s infinite;
 }
 body {
-  background: #c4c4c4;
+  background-color: #262626;
+  color: #fff;
 }
 @keyframes pop {
   0% {
@@ -202,14 +203,15 @@ body {
 
 .link-button {
   height: 65px;
+
   border-radius: 15px;
   background-color: #fff;
 
   color: #000;
   display: flex;
   align-items: center;
-  box-shadow: -22px 22px 44px #bebebe, 22px -22px 44px #ffffff;
-  margin-top: 25px;
+
+  margin-top: 5px;
   gap: 10px;
 }
 .link-button img {
@@ -289,15 +291,7 @@ body {
     margin-top: 5px;
     background-color: #fff;
   }
-  #desc {
-    all: unset;
-    margin-top: 5px;
-    background-color: #fff;
-    height: 140px;
 
-    border-radius: 10px;
-    width: 110%;
-  }
   .upb {
     margin-bottom: 30px;
   }

@@ -1,22 +1,20 @@
-/* Navbar.css */
-
 .main {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   padding: 10px;
   position: fixed;
   z-index: 33;
   width: 100%;
   top: 0;
-  background-color: #fff;
-  color: #000;
+  background-color: #121212; /* Dark background color */
+  color: #fff; /* Light text color */
 }
 
-.left h1 {
+.left h2 {
   margin: 0;
   font-family: "Inter", sans-serif;
+  color: #fff; /* Light text color */
 }
 
 .right {
@@ -38,26 +36,37 @@
   border-radius: 4px;
   margin-right: 20px;
   font-weight: bold;
-  box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
+  box-shadow: 20px 20px 60px #000, -20px -20px 60px #000;
   cursor: pointer;
   font-family: "Inter", sans-serif;
+  background-color: #000; /* Dark background color */
+  color: #fff; /* Light text color */
 }
 
 .loading {
   text-align: center;
   font-family: "Inter", sans-serif;
+  color: #fff; /* Light text color */
 }
+
 .upload {
   font-size: 1.84rem;
-  border: 1px solid #000;
-  color: #000;
+  border: 1px solid #fff; /* Light border color */
+  color: #fff; /* Light text color */
   border-radius: 50%;
   padding: 5px;
   cursor: pointer;
 }
+
+/* Add the following rule for the dark hover effect */
+.upload:hover {
+  background-color: #1a1a1a; /* Dark hover background color */
+}
+
 label {
   display: block;
   margin-bottom: 10px;
+  color: #fff; /* Light text color */
 }
 
 input[type="text"],
@@ -65,8 +74,10 @@ textarea {
   width: 100%;
   padding: 10px;
   margin-bottom: 15px;
-  border: 1px solid #ccc;
+  border: 1px solid #666; /* Dark border color */
   border-radius: 10px;
+  background-color: #1a1a1a; /* Dark background color */
+  color: #fff; /* Light text color */
 }
 
 input[type="file"] {
@@ -80,6 +91,11 @@ input[type="file"] {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+
+/* Add the following rule for the dark hover effect */
+.uploadbtn:hover {
+  background-color: #990000; /* Dark hover background color */
 }
 
 button:hover {

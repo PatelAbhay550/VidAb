@@ -15,6 +15,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
+
           <Route path="/login" element={<Auth />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/upload" element={<Upload />} />
