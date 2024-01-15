@@ -68,7 +68,7 @@ const Videos = ({ videos, renderDeleteButton, onDelete }) => {
 
   const handleVideoClick = (video) => {
     setSelectedVideo(video);
-    handleDeleteConfirmation(video);
+    
   };
 
   const handleDeleteConfirmation = (video) => {
