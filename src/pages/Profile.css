@@ -70,7 +70,9 @@
 }
 .vidspro {
   margin-right: -605px;
+ 
+}
+.fc {
   display: flex;
   flex-direction: column;
 }
-
