@@ -133,6 +133,7 @@ const Videos = ({ videos, renderDeleteButton, onDelete }) => {
                 src={video.thumbnail}
                 style={{
                   width: "100%",
+                      margin: "0",
                   objectFit: "contain",
                   background: "#6c95ff",
                   aspectRatio: "16/9",
