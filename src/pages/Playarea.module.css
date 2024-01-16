@@ -9,7 +9,9 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   color: #fff; /* Light text color */
 }
-
+.upti{
+  margin-top:-2px;
+}
 .playarecontainer img {
   border-radius: 50%;
   height: 35px;
