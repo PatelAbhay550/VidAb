@@ -97,7 +97,7 @@ const Playarea = () => {
             />
             <div className="left">
               <p>{video.username}</p>
-              <p>
+              <p className="upti">
                 Uploaded: {video.dateupload} {video.timeupload}
               </p>
               <p>{viewsCount} View(s)</p>
