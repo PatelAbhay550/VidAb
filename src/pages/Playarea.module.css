@@ -41,9 +41,10 @@ p {
   align-items: center;
   border-top: 2px solid #ccc;
   margin-top: 20px;
-  gap: 10px;
+  gap: 25px;
 }
-
+.user p:nthchild(2){
+  margin-top:-10px;}
 .user img {
   max-width: 50px;
   border-radius: 50%;
