@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { auth } from "../config/firebase";
 import "./Navbar.css";
+import { CiLogout } from "react-icons/ci";
 import { FaUpload } from "react-icons/fa";
 const Navbar = () => {
   const [isSignedIn, setIsSignedIn] = useState(false);
@@ -42,7 +43,7 @@ const Navbar = () => {
             <img src={profile} alt="user" />
           </Link>
           <Link to="/login">
-            <button>Log out</button>
+            <CiLogout className="upload" />
           </Link>
         </div>
       </div>

@@ -41,8 +41,8 @@ const calculateTimeDifference = (dateString, timeString) => {
 };
 
 const Videos = ({ videos, renderDeleteButton, onDelete }) => {
-  const [vidlist, setVidlist] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [vidlist, setVidlist] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
 
   const getVids = async () => {
@@ -52,11 +52,13 @@ const Videos = ({ videos, renderDeleteButton, onDelete }) => {
         orderBy("timeupload", "desc"),
         limit(5)
       );
+
       const querySnapshot = await getDocs(q);
       const videosData = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
+
       return videosData;
     } catch (err) {
       console.error(err);
@@ -124,54 +126,58 @@ const Videos = ({ videos, renderDeleteButton, onDelete }) => {
 
   return (
     <div className="containerv">
-      {videos.map((video) => (
-        <div className="video-card card-p" key={video.id}>
-          <Link to={`/playarea/${video.id}`}>
-            {video.thumbnail ? (
-              <img
-                className="video-thumbnail"
-                src={video.thumbnail}
-                style={{
-                  width: "100%",
-                      margin: "0",
-                  objectFit: "contain",
-                  background: "#6c95ff",
-                  aspectRatio: "16/9",
-                }}
-                alt={video.title}
-              />
-            ) : (
-              <video
-                className="video"
-                src={video.vidurl}
-                controls={selectedVideo === video}
-                controlsList="nodownload"
-                style={{
-                  width: "100%",
-                  objectFit: "contain",
-                  background: "#6c95ff",
-                  aspectRatio: "16/9",
-                }}
-                onClick={() => handleVideoClick(video)}
-              ></video>
-            )}
-          </Link>
-          <div className="video-details">
-            <div className="leftd">
-              <img src={video.userimg} alt={video.title} />
-              <p>{video.username}</p>
-            </div>
-            <div className="rightd">
-              <h3>{video.title} </h3>
-              <p>
-                Uploaded:{" "}
-                {calculateTimeDifference(video.dateupload, video.timeupload)}
-              </p>
-              {renderDeleteButton && renderDeleteButton(video)}
+      {vidlist.length > 0 ? (
+        vidlist.map((video) => (
+          <div className="video-card card-p" key={video.id}>
+            <Link to={`/playarea/${video.id}`}>
+              {video.thumbnail ? (
+                <img
+                  className="video-thumbnail"
+                  src={video.thumbnail}
+                  style={{
+                    width: "100%",
+                    margin: "0",
+                    objectFit: "contain",
+                    background: "#6c95ff",
+                    aspectRatio: "16/9",
+                  }}
+                  alt={video.title}
+                />
+              ) : (
+                <video
+                  className="video"
+                  src={video.vidurl}
+                  controls={selectedVideo === video}
+                  controlsList="nodownload"
+                  style={{
+                    width: "100%",
+                    objectFit: "contain",
+                    background: "#6c95ff",
+                    aspectRatio: "16/9",
+                  }}
+                  onClick={() => handleVideoClick(video)}
+                ></video>
+              )}
+            </Link>
+            <div className="video-details">
+              <div className="leftd">
+                <img src={video.userimg} alt={video.title} />
+                <p>{video.username}</p>
+              </div>
+              <div className="rightd">
+                <h3>{video.title} </h3>
+                <p>
+                  Uploaded:{" "}
+                  {calculateTimeDifference(video.dateupload, video.timeupload)}
+                </p>
+                {renderDeleteButton && renderDeleteButton(video)}
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))
+      ) : (
+        <p>No videos available</p>
+      )}
       {selectedVideo === null && <p></p>}
       {selectedVideo && (
         <div>

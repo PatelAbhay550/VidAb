@@ -8,8 +8,8 @@
   animation: pop 1.5s infinite;
 }
 body {
-  background-color: #262626;
-  color: #fff;
+  background-color: #ccc;
+  color: #000;
 }
 @keyframes pop {
   0% {
@@ -50,7 +50,7 @@ body {
   border-radius: 15px;
   overflow: hidden;
   margin-top: 25px;
-    display: flex;
+  display: flex;
   flex-direction: column;
   position: relative;
   transition: transform 0.2s ease-in-out;

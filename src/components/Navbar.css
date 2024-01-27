@@ -4,23 +4,26 @@
   align-items: center;
   padding: 10px;
   position: fixed;
+  max-height: 70px;
   z-index: 33;
   width: 100%;
   top: 0;
-  background-color: #121212; /* Dark background color */
-  color: #fff; /* Light text color */
+  background-color: #fff; /* Dark background color */
+  color: #000; /* Light text color */
 }
 
 .left h2 {
   margin: 0;
   font-family: "Inter", sans-serif;
-  color: #fff; /* Light text color */
+  color: #000; /* Light text color */
 }
 
 .right {
   display: flex;
   align-items: center;
   gap: 10px;
+  padding-right: 20px;
+  color: #000;
 }
 
 .right img {
@@ -40,7 +43,7 @@
   cursor: pointer;
   font-family: "Inter", sans-serif;
   background-color: #000; /* Dark background color */
-  color: #fff; /* Light text color */
+  color: #000; /* Light text color */
 }
 
 .loading {
@@ -51,10 +54,11 @@
 
 .upload {
   font-size: 1.84rem;
-  border: 1px solid #fff; /* Light border color */
-  color: #fff; /* Light text color */
+  border: 1px solid #000; /* Light border color */
+  color: #000; /* Light text color */
   border-radius: 50%;
   padding: 5px;
+
   cursor: pointer;
 }
 

@@ -5,8 +5,8 @@
   flex-direction: column;
   align-items: center;
   margin-top: 50px;
-  color: #fff; /* Light text color */
-  background-color: #121212; /* Dark background color */
+  color: #000; /* Light text color */
+  background-color: #fff; /* Dark background color */
   padding: 20px;
   border-radius: 10px;
 }

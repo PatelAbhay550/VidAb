@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { auth, db } from "../config/firebase";
 import { Link } from "react-router-dom";
 import { CiShare2 } from "react-icons/ci";
+import { FaPlay, FaExpand, FaCompress, FaPause } from "react-icons/fa";
 import {
   doc,
   getDoc,
@@ -20,6 +21,13 @@ const Playarea = () => {
   const [video, setVideo] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [viewsCount, setViewsCount] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const [volume, setVolume] = useState(1);
+  const [duration, setDuration] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [isFullScreen, setIsFullScreen] = useState(false);
+  const videoRef = useRef(null);
 
   useEffect(() => {
     const fetchVideoDetails = async () => {
@@ -64,6 +72,58 @@ const Playarea = () => {
     fetchVideoDetails();
   }, [videoId]);
 
+  const togglePlay = () => {
+    setIsPlaying((prevIsPlaying) => !prevIsPlaying);
+  };
+
+  const toggleMute = () => {
+    setIsMuted((prevIsMuted) => !prevIsMuted);
+  };
+
+  const handleVolumeChange = (event) => {
+    const newVolume = parseFloat(event.target.value);
+    setVolume(newVolume);
+  };
+
+  const handleTimeUpdate = () => {
+    setCurrentTime(videoRef.current.currentTime);
+  };
+
+  const handleDurationChange = () => {
+    setDuration(videoRef.current.duration);
+  };
+
+  const handleSeek = (value) => {
+    const newTime = (value * duration) / 100;
+    videoRef.current.currentTime = newTime;
+    setCurrentTime(newTime);
+  };
+
+  const toggleFullScreen = () => {
+    if (!isFullScreen) {
+      if (videoRef.current.requestFullscreen) {
+        videoRef.current.requestFullscreen();
+      } else if (videoRef.current.mozRequestFullScreen) {
+        videoRef.current.mozRequestFullScreen();
+      } else if (videoRef.current.webkitRequestFullscreen) {
+        videoRef.current.webkitRequestFullscreen();
+      } else if (videoRef.current.msRequestFullscreen) {
+        videoRef.current.msRequestFullscreen();
+      }
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+      }
+    }
+    setIsFullScreen((prevIsFullScreen) => !prevIsFullScreen);
+  };
+
   const handleShare = () => {
     if (navigator.share) {
       navigator
@@ -78,15 +138,56 @@ const Playarea = () => {
     }
   };
 
+  useEffect(() => {
+    const videoElement = videoRef.current;
+
+    if (videoElement) {
+      if (isPlaying) {
+        videoElement.play();
+      } else {
+        videoElement.pause();
+      }
+
+      videoElement.muted = isMuted;
+      videoElement.volume = volume;
+    }
+  }, [isPlaying, isMuted, volume]);
+
   return (
     <div className={styles.playarecontainer}>
       {isLoading && <p>Loading video details...</p>}
       {video && (
         <div>
-          <video className="video" src={video.vidurl} controls></video>
+          <video
+            ref={videoRef}
+            className="video cld-video-player cld-fluid"
+            src={video.vidurl}
+            onTimeUpdate={handleTimeUpdate}
+            onDurationChange={handleDurationChange}
+          ></video>
+
+          <div className={styles.customcontrols}>
+            <button onClick={togglePlay}>
+              {isPlaying ? <FaPause /> : <FaPlay />}
+            </button>{" "}
+            <span>
+              {Math.floor(currentTime)} / {Math.floor(duration)}
+            </span>
+            <input
+              type="range"
+              min={0}
+              max={duration}
+              step={1}
+              value={currentTime}
+              onChange={(e) => handleSeek(e.target.value)}
+            />
+            <button onClick={toggleFullScreen}>
+              {isFullScreen ? <FaCompress /> : <FaExpand />}
+            </button>
+          </div>
 
           <h2>{video.title}</h2>
-          <p>Description: {video?.description || "No description"}</p>
+          <p>Description: {video?.desc || "No description"}</p>
           <div className={styles.user}>
             <img
               src={

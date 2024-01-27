@@ -73,6 +73,7 @@ const Upload = () => {
             const videoData = {
               title,
               vidurl: downloadURL,
+              desc: description,
               uid: userId,
               dateupload: currDate,
               timeupload: currTime,
